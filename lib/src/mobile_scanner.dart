@@ -19,7 +19,7 @@ class MobileScanner extends StatefulWidget {
   /// The controller that manages the barcode scanner.
   ///
   /// If this is null, the scanner will manage its own controller.
-  final MobileScannerController? controller;
+  final MobileScannerController controller;
 
   /// The function that builds an error widget when the scanner
   /// could not be started.
@@ -69,7 +69,7 @@ class MobileScanner extends StatefulWidget {
   /// Create a new [MobileScanner] using the provided [controller]
   /// and [onBarcodeDetected] callback.
   const MobileScanner({
-    this.controller,
+    required this.controller,
     this.errorBuilder,
     this.fit = BoxFit.cover,
     required this.onDetect,
@@ -149,7 +149,7 @@ class _MobileScannerState extends State<MobileScanner>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _controller = widget.controller ?? MobileScannerController();
+    _controller = widget.controller;
     _startScanner();
   }
 
@@ -312,7 +312,6 @@ class _MobileScannerState extends State<MobileScanner>
     WidgetsBinding.instance.removeObserver(this);
     _barcodesSubscription?.cancel();
     _barcodesSubscription = null;
-    _controller.dispose();
     super.dispose();
   }
 }
